@@ -13,6 +13,7 @@ import com.example.conftrack.web.dto.SessionFeedback;
 import com.example.conftrack.web.dto.SessionListItem;
 import com.example.conftrack.web.dto.SessionSummary;
 import org.apache.commons.text.StringEscapeUtils;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +38,7 @@ public class FeedbackService {
     public FeedbackService(SessionRepository sessions,
                            FeedbackRepository feedback,
                            ModerationRepository moderations,
-                           FeedbackScorer scorer) {
+                           @Qualifier("weightedFeedbackScorer") FeedbackScorer scorer) {
         this.sessions = sessions;
         this.feedback = feedback;
         this.moderations = moderations;
@@ -99,7 +100,7 @@ public class FeedbackService {
         double average = given.stream()
                 .mapToInt(Feedback::getRating)
                 .average()
-                .getAsDouble();
+                .orElse(0.0);
 
         Map<Long, String> statuses = new HashMap<>();
         List<Long> ids = given.stream().map(Feedback::getId).toList();

@@ -34,6 +34,8 @@ spring:
 
 conftrack:
   feedback:
+    minimum-rating: 1
+    recent-days: 30
 
   api:
     # Demo credentials for the QA login in requests/feedback.http. Never real ones.

@@ -25,7 +25,7 @@ public class Feedback {
     @JoinColumn(name = "session_id", nullable = false)
     private Session session;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "attendee_email", nullable = false)
     private String attendeeEmail;
 
     @Column(nullable = false)
